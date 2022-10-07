@@ -1,2 +1,2 @@
 # vw-tdd-oktober-2022
-Test Driven Development ans Clean Code
+Test Driven Development and Clean Code
