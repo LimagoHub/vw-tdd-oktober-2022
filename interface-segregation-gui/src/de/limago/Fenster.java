@@ -19,5 +19,5 @@ public class Fenster extends Frame {
 	    new Fenster().setVisible(true);
     }
 
-    
+
 }
