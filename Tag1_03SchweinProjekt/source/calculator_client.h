@@ -16,6 +16,7 @@ public:
 	void go()
 	{
 		
+		std::cout << calculator_.add(4, 4) << std::endl;
 		std::cout << calculator_.add(3, 4) << std::endl;
 	}
 };
