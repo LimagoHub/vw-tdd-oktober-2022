@@ -15,7 +15,7 @@ add_executable(PersonenService source/main.cpp
 "source/service/personen_service_impl.h" 
 "source/service/personen_service_exception.h"
 
-)
+        source/service/blacklist_service.h)
 
 
 # Add tests
