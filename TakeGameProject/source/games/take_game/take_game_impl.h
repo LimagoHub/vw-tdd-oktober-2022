@@ -9,14 +9,17 @@
 class take_game_impl :public game{
 
     int stones;
-    bool gameover;
+    int move;
 
     void execute_rounds() {
         spielerzug();
         computerzug();
     }
     void spielerzug() {
-        int move;
+
+        if(is_gameover())  return;
+
+
         while(true) {
             std::cout << "Es gibt " << stones << " Steine. Bitte nehmen Sie 1,2 oder 3!" << std::endl;
             std::cin >> move;
@@ -24,32 +27,46 @@ class take_game_impl :public game{
                 break;
             std::cout << "Ungueltiger Zug" << std::endl;
         }
-        stones -= move;
+        terminate_move("Human");
+
     }
 
     void computerzug() {
+
+        if(is_gameover())
+            return;
+
         const int moves[] = {3,1,1,2};
-        if(stones < 1) {
-            std::cout << " Du Loser" << std::endl;
-            gameover = true;
-            return ;
-        }
-        if(stones == 1) {
-            std::cout << " Du hast nur Glueck gehabt" << std::endl;
-            gameover = true;
-            return ;
-        }
-        int move = moves[stones % 4];
+
+        move = moves[stones % 4];
         std::cout << "Computer nimmt " << move << " Steine." << std::endl;
-        stones -= move;
+        terminate_move( "Computer");
+
+    }
+
+    void terminate_move(std::string player) {
+        update_board();
+        write_game_over_message_if_game_is_over(player);
+    }
+
+    void write_game_over_message_if_game_is_over(const std::string &player) {
+        if(is_gameover()) {
+            std::cout << "Player " << player << " hat verloren." << std::endl;
+        }
+    }
+
+    void update_board() { stones -= move; }
+
+    bool is_gameover() {
+        return stones < 1;
     }
 public:
-    take_game_impl():stones(23),gameover(false) {
+    take_game_impl():stones(23) {
 
     }
 
     void play() override {
-        while ( !gameover) {
+        while ( !is_gameover()) {
             execute_rounds();
         }
     }
