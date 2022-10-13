@@ -22,14 +22,15 @@ protected:
     bool is_gameover() const override{
         return getBoard() < 1 || getPlayers().empty();
     }
-public:
-    take_game_impl() {
-        setBoard(23);
+
+    void prepare() override {
+        write(getCurrentPlayer()->getName() + " ist am Zug.");
     }
 
-
-
-
+public:
+    take_game_impl(writer &writer) : abstract_game(writer) {
+        setBoard(23);
+    }
 
 
 };

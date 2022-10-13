@@ -3,9 +3,10 @@
 #include "source/clients/game_client.h"
 #include "source/games/take_game/players/human_player.h"
 #include "source/games/take_game/players/computer_player.h"
-
+#include "source/IO/console_writer.h"
 int main() {
-    take_game_impl game_;
+    console_writer consoleWriter_;
+    take_game_impl game_{consoleWriter_};
     human_player human{"Mensch"};
     computer_player computer{"computer"};
     game_.addPlayer(&human);

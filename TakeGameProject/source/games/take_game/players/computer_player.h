@@ -10,7 +10,9 @@ class computer_player :public abstract_take_game_player {
 
 
 public:
-    computer_player(const std::string &name) : abstract_take_game_player(name) {}
+    computer_player(const std::string &name) : abstract_take_game_player(name) {
+
+    }
 
     int do_turn(const int &stones) const override {
 

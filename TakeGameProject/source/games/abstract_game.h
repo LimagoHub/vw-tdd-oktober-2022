@@ -5,12 +5,15 @@
 #pragma once
 #include "game.h"
 #include "players/player.h"
+#include "../IO/writer.h"
 template<class BOARD, class MOVE>
 class abstract_game :public game{
+
+
     std::vector<player<BOARD,MOVE>  *> players;
     BOARD board;
     MOVE move;
-
+    writer & writer_;
     player<BOARD,MOVE> *current_player;
 
 
@@ -19,31 +22,32 @@ class abstract_game :public game{
     }
 private:
 
-    void execute_rounds() {
-        for(auto player: players) {
-            setCurrentPlayer(player);
-            execute_single_move();
-        }
+    void execute_rounds() { // operation, command
+
+        for(auto player: players)  prepare_and_execute_single_move(player);
+
     }
 
-    void execute_single_move() {
+    void prepare_and_execute_single_move(player<BOARD,MOVE> *player) { // Integration, command
+        setCurrentPlayer(player);
+        execute_single_move();
+    }
+    void execute_single_move() { // Integration, command
 
-        if(is_gameover())  return;
+        if(is_gameover()) return;
+        prepare();
         execute_move();
         terminate_move();
 
     }
 
-    void execute_move()  {
-        do {
-            move = getCurrentPlayer()->do_turn(board);
-
-        } while(players_move_is_invalid());
+    void execute_move()  { // command, operation
+        do move = getCurrentPlayer()->do_turn(board); while(players_move_is_invalid());
     }
 
-    bool players_move_is_invalid() {
+    bool players_move_is_invalid() { // query
         if(is_move_valid()) return false;
-        std::cout << "Ungueltiger Zug" << std::endl;
+        write("Ungueltiger Zug");
         return true;
     }
 
@@ -52,20 +56,25 @@ private:
         write_game_over_message_if_game_is_over();
     }
 
-    void write_game_over_message_if_game_is_over() {
-        if(is_gameover()) {
-            std::cout << "Player " << getCurrentPlayer()->getName() << " hat verloren." << std::endl;
-        }
+    void write_game_over_message_if_game_is_over() { // Query
+        if(is_gameover()) write( "Player " + getCurrentPlayer()->getName() + " hat verloren.");
+
     }
 protected:
+
+    void write(std::string message) {
+        writer_.write(message);
+    }
+
     player<BOARD,MOVE> *getCurrentPlayer() const {
         return current_player;
     }
 
+    virtual void prepare() {
+        // Ok
+    }
 
 
-
-protected:
 
 public:
     const std::vector<player<BOARD, MOVE> *> &getPlayers() const {
@@ -97,15 +106,14 @@ protected:
     virtual bool is_gameover() const = 0;
 
 public:
+    abstract_game(writer &writer) : writer_(writer) {}
 
     void addPlayer(player<BOARD,MOVE> *player){
         players.push_back(player);
     }
 
     void play() override {
-        while ( !is_gameover()) {
-            execute_rounds();
-        }
+        while ( !is_gameover())  execute_rounds();
     }
 };
 
