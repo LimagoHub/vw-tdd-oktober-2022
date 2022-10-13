@@ -12,7 +12,9 @@ class abstract_player :public player<BOARD,MOVE> {
 
     std::string name;
 public:
-    abstract_player(const std::string &name) : name(name) {}
+    abstract_player(const std::string &name) : name(name) {
+
+    }
 
     const std::string &getName() const override {
         return name;
