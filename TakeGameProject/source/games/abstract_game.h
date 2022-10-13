@@ -9,7 +9,18 @@
 template<class BOARD, class MOVE>
 class abstract_game :public game{
 
+public:
+    abstract_game(writer &writer) : writer_(writer) {}
 
+    void addPlayer(player<BOARD,MOVE> *player){
+        players.push_back(player);
+    }
+
+    void play() override {
+        while ( !is_gameover())  execute_rounds();
+    }
+
+private:
     std::vector<player<BOARD,MOVE>  *> players;
     BOARD board;
     MOVE move;
@@ -20,7 +31,7 @@ class abstract_game :public game{
     void setCurrentPlayer(player<BOARD,MOVE> *currentPlayer) {
         current_player = currentPlayer;
     }
-private:
+
 
     void execute_rounds() { // operation, command
 
@@ -105,16 +116,7 @@ protected:
 
     virtual bool is_gameover() const = 0;
 
-public:
-    abstract_game(writer &writer) : writer_(writer) {}
 
-    void addPlayer(player<BOARD,MOVE> *player){
-        players.push_back(player);
-    }
-
-    void play() override {
-        while ( !is_gameover())  execute_rounds();
-    }
 };
 
 

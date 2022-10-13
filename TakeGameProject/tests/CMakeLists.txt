@@ -11,7 +11,7 @@ set_target_properties(gmock_main gtest_main PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUD
 
 set(SOURCE
 	main.cpp
-)
+        computer_player_test.cpp computer_player_test.h DummyClassesForTest.h MyAbstractGameDummy.h abstract_game_test.cpp abstract_game_test.h)
 
 
 
