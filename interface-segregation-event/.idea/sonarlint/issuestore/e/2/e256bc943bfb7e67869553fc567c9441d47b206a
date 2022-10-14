@@ -1,0 +1,9 @@
+
+Q	java:S125"<This block of commented-out lines of code should be removed.(˜„íø
+N	java:S106*"9Replace this use of System.out or System.err by a logger.(÷ùŒ”
+N	java:S1064"9Replace this use of System.out or System.err by a logger.(§Ç°á
+S
+java:S1172="8Remove these unused method parameters "ware", "ausgabe".(¹Ê”ƒşÿÿÿÿ
+N	java:S106?"9Replace this use of System.out or System.err by a logger.(§Ç°á
+M
+java:S1128"7Remove this unused import 'de.tiere.PigTooFatListener'.(üá¬Ü
